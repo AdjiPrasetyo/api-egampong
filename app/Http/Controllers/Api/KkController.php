@@ -28,30 +28,45 @@ class KkController extends Controller
      */
     public function store(Request $request)
     {
-        $dataKk = new Kk;
-        $rules = [
-            'id' => 'required',
-            'alamat' => 'required'
-        ];
-        $validator = FacadesValidator::make($request->all(), $rules);
-        if ($validator->fails()) {
+        $data = Kk::find($request->id);
+        //Cek data
+        if ($data) {
             return response()->json([
                 'status' => false,
-                'message' => 'Data gagal ditambahkan',
-                'data' => $validator->errors()
+                'message' => 'Data sudah ada',
+                'data' => $data['id']. ' Sudah terdata !',
             ]);
+        } else {
+            
+            $dataKk = new Kk;
+            $rules = [
+                'id' => 'required',
+                'alamat' => 'required'
+            ];
+            $validator = FacadesValidator::make($request->all(), $rules);
+            if ($validator->fails()) {
+                return response()->json([
+                    'status' => false,
+                    'message' => 'Data gagal ditambahkan',
+                    'data' => $validator->errors()
+                ]);
+            }
+    
+            $dataKk->id = $request->id;
+            $dataKk->alamat = $request->alamat;
+    
+    
+            $post = $dataKk->save();
+    
+            return response()->json([
+                'status' => true,
+                'message' => 'Sukses menambah data'
+            ], 200);
+
         }
 
-        $dataKk->id = $request->id;
-        $dataKk->alamat = $request->alamat;
 
-
-        $post = $dataKk->save();
-
-        return response()->json([
-            'status' => true,
-            'message' => 'Sukses menambah data'
-        ], 200);
+      
     }
 
     /**
@@ -67,7 +82,6 @@ class KkController extends Controller
                 'message' => 'Data ditemukan',
                 'data' => $data
             ], 200);
-            //TODO belum jalan kondisi else
         } else {
             return response()->json([
                 'status' => false,
