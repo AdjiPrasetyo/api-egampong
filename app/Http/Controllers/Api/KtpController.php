@@ -27,52 +27,66 @@ class KtpController extends Controller
      */
     public function store(Request $request)
     {
-        $dataKtp = new Ktp;
-        $rules = [
-            'id' => 'required',
-            'kk_id' => 'required',
-            'nama_lengkap' => 'required',
-            'tempat_lahir' => 'required',
-            'tanggal_lahir' => 'required|date',
-            'jenis_kelamin' => 'required',
-            'agama' => 'required',
-            'pendidikan' => 'required',
-            'pekerjaan' => 'required',
-            'status_perkawinan' => 'required',
-            'status_keluarga' => 'required',
-            'nama_ayah' => 'required',
-            'nama_ibu' => 'required',
-        ];
-        $validator = Validator::make($request->all(), $rules);
-        if ($validator->fails()) {
+        $data = Ktp::find($request->id);
+        //Cek data
+        
+        if($data){
             return response()->json([
                 'status' => false,
-                'message' => 'Data gagal ditambahkan',
-                'data' => $validator->errors()
+                'message' => 'Data sudah ada',
+                'data' => $data['id']. ' Sudah terdata !',
             ]);
+        }else{
+
+            $dataKtp = new Ktp;
+            $rules = [
+                'id' => 'required',
+                'kk_id' => 'required',
+                'nama_lengkap' => 'required',
+                'tempat_lahir' => 'required',
+                'tanggal_lahir' => 'required|date',
+                'jenis_kelamin' => 'required',
+                'agama' => 'required',
+                'pendidikan' => 'required',
+                'pekerjaan' => 'required',
+                'status_perkawinan' => 'required',
+                'status_keluarga' => 'required',
+                'nama_ayah' => 'required',
+                'nama_ibu' => 'required',
+            ];
+            $validator = Validator::make($request->all(), $rules);
+            if ($validator->fails()) {
+                return response()->json([
+                    'status' => false,
+                    'message' => 'Data gagal ditambahkan',
+                    'data' => $validator->errors()
+                ]);
+            }
+    
+            $dataKtp->id = $request->id;
+            $dataKtp->kk_id = $request->kk_id;
+            $dataKtp->nama_lengkap = $request->nama_lengkap;
+            $dataKtp->tempat_lahir = $request->tempat_lahir;
+            $dataKtp->tanggal_lahir = $request->tanggal_lahir;
+            $dataKtp->jenis_kelamin = $request->jenis_kelamin;
+            $dataKtp->agama = $request->agama;
+            $dataKtp->pendidikan = $request->pendidikan;
+            $dataKtp->pekerjaan = $request->pekerjaan;
+            $dataKtp->status_perkawinan = $request->status_perkawinan;
+            $dataKtp->status_keluarga = $request->status_keluarga;
+            $dataKtp->nama_ayah = $request->nama_ayah;
+            $dataKtp->nama_ibu = $request->nama_ibu;
+    
+    
+            $post = $dataKtp->save();
+    
+            return response()->json([
+                'status' => true,
+                'message' => 'Sukses menambah data'
+            ], 200);
+
         }
 
-        $dataKtp->id = $request->id;
-        $dataKtp->kk_id = $request->kk_id;
-        $dataKtp->nama_lengkap = $request->nama_lengkap;
-        $dataKtp->tempat_lahir = $request->tempat_lahir;
-        $dataKtp->tanggal_lahir = $request->tanggal_lahir;
-        $dataKtp->jenis_kelamin = $request->jenis_kelamin;
-        $dataKtp->agama = $request->agama;
-        $dataKtp->pendidikan = $request->pendidikan;
-        $dataKtp->pekerjaan = $request->pekerjaan;
-        $dataKtp->status_perkawinan = $request->status_perkawinan;
-        $dataKtp->status_keluarga = $request->status_keluarga;
-        $dataKtp->nama_ayah = $request->nama_ayah;
-        $dataKtp->nama_ibu = $request->nama_ibu;
-
-
-        $post = $dataKtp->save();
-
-        return response()->json([
-            'status' => true,
-            'message' => 'Sukses menambah data'
-        ], 200);
     }
 
     /**
