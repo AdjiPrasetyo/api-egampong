@@ -26,7 +26,7 @@ return new class extends Migration
             $table->string("nama_ayah", 50)->nullable(false);
             $table->string("nama_ibu", 50)->nullable(false);
             $table->timestamps();
-            $table->foreign('kk_id')->references('id')->on('kk');
+            $table->foreign('kk_id')->references('id')->on('kk')->onUpdate('cascade')->onDelete('cascade');
         });
     }
 

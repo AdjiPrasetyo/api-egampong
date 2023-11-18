@@ -22,7 +22,7 @@ return new class extends Migration
             $table->string('nama_pelapor',100)->nullable(false);
             $table->string('hubungan_pelapor',100)->nullable(false);
             $table->timestamps();
-            $table->foreign('ktp_id')->references('id')->on('ktp');
+            $table->foreign('ktp_id')->references('id')->on('ktp')->onUpdate('cascade')->onDelete('no action');
         });
     }
 

@@ -5,8 +5,6 @@ use App\Http\Controllers\Api\KtpController;
 use App\Http\Controllers\Api\InfoController;
 use App\Http\Controllers\MeninggalController;
 use App\Http\Controllers\PindahController;
-use App\Models\Pindah;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -48,4 +46,8 @@ Route::post('meninggal/', [MeninggalController::class, 'store']);
 Route::put('meninggal/{id}', [MeninggalController::class, 'update']);
 Route::delete('meninggal/{id}', [MeninggalController::class, 'destroy']);
 
-Route::get('info', [InfoController::class, 'index']);
+Route::get('info-detail/{id}', [InfoController::class, 'infoShow']);
+Route::get('info-jiwa', [InfoController::class, 'infoJiwa']);
+Route::get('info-kk', [InfoController::class, 'infoKk']);
+Route::get('info-laki-laki', [InfoController::class, 'infoLakiLaki']);
+Route::get('info-perempuan', [InfoController::class, 'infoPerempuan']);

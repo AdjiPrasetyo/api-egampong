@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
+use App\Models\Kk;
 use Illuminate\Http\Request;
 
 class InfoController extends Controller
@@ -11,12 +12,50 @@ class InfoController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function infoJiwa()
     {
-        $data = DB::table('kk')
-            ->join('ktp', 'kk.id', '=', 'ktp.kk_id')
-            ->select('kk.id', 'ktp.kk_id', 'ktp.id', 'ktp.nama_lengkap', 'kk.alamat')
+        $data = DB::table('ktp')
+            ->join('meninggal', 'ktp.id', '!=', 'meninggal.ktp_id',)
+            ->join('pindah', 'ktp.id', '!=', 'pindah.ktp_id',)
+            ->select('ktp.id', 'nama_lengkap')
             ->get();
+        return response()->json([
+            'status' => true,
+            'message' => 'data info',
+            'data' => $data
+        ], 200);
+    }
+    public function infoLakiLaki()
+    {
+        $data = DB::table('ktp')
+            ->join('meninggal', 'ktp.id', '!=', 'meninggal.ktp_id',)
+            ->join('pindah', 'ktp.id', '!=', 'pindah.ktp_id',)
+            ->where('jenis_kelamin','=', 'LAKI-LAKI')
+            ->select('ktp.id', 'nama_lengkap', 'jenis_kelamin')
+            ->get();
+        return response()->json([
+            'status' => true,
+            'message' => 'data info',
+            'data' => $data
+        ], 200);
+    }
+    public function infoPerempuan()
+    {
+        $data = DB::table('ktp')
+            ->join('meninggal', 'ktp.id', '!=', 'meninggal.ktp_id',)
+            ->join('pindah', 'ktp.id', '!=', 'pindah.ktp_id',)
+            ->where('jenis_kelamin','=', 'PEREMPUAN')
+            ->select('ktp.id', 'nama_lengkap', 'jenis_kelamin')
+            ->get();
+        return response()->json([
+            'status' => true,
+            'message' => 'data info',
+            'data' => $data
+        ], 200);
+    }
+    public function infoKk()
+    {
+        $data = Kk::all();
         return response()->json([
             'status' => true,
             'message' => 'data info',
@@ -35,9 +74,18 @@ class InfoController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function infoShow(string $id)
     {
-        //
+        $data = DB::table('kk')
+        ->join('ktp', 'kk.id', '=', 'ktp.kk_id')
+        ->where('kk.id', '=', $id)
+        ->select('ktp.*','kk.alamat')
+        ->get();
+        return response()->json([
+            'status' => true,
+            'message' => 'data info',
+            'data' => $data
+        ], 200);
     }
 
     /**
