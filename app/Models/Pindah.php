@@ -10,9 +10,9 @@ class Pindah extends Model
     use HasFactory;
     protected $table = "pindah";
     protected $fillable = [
-        'id',
+        // 'id',
         'ktp_id',
-        'keterangan',
+        // 'keterangan',
     ];
     public $timestamps = true;
     public $incrementing = false;

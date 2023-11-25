@@ -14,7 +14,6 @@ return new class extends Migration
         Schema::create('pindah', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('ktp_id')->nullable(false);
-            $table->string('keterangan')->nullable(false);
             $table->timestamps();
             $table->foreign('ktp_id')->references('id')->on('ktp')->onUpdate('cascade')->onDelete('no action');
         });

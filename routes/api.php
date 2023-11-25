@@ -3,8 +3,8 @@
 use App\Http\Controllers\Api\KkController;
 use App\Http\Controllers\Api\KtpController;
 use App\Http\Controllers\Api\InfoController;
-use App\Http\Controllers\MeninggalController;
-use App\Http\Controllers\PindahController;
+use App\Http\Controllers\Api\MeninggalController;
+use App\Http\Controllers\Api\PindahController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -46,6 +46,9 @@ Route::post('meninggal/', [MeninggalController::class, 'store']);
 Route::put('meninggal/{id}', [MeninggalController::class, 'update']);
 Route::delete('meninggal/{id}', [MeninggalController::class, 'destroy']);
 
+Route::get('validasi', [InfoController::class, 'validasi']);
+
+Route::get('info', [InfoController::class, 'index']);
 Route::get('info-detail/{id}', [InfoController::class, 'infoShow']);
 Route::get('info-jiwa', [InfoController::class, 'infoJiwa']);
 Route::get('info-kk', [InfoController::class, 'infoKk']);

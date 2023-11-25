@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Api;
 
+use App\Http\Controllers\Controller;
 use App\Models\Meninggal;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -26,7 +27,7 @@ class MeninggalController extends Controller
      */
     public function store(Request $request)
     {
-        $data = Meninggal::find($request->id);
+        $data = Meninggal::where('ktp_id' , '=', $request->ktp_id)->first();
         //cek data
         if($data){
             return response()->json([
@@ -39,15 +40,7 @@ class MeninggalController extends Controller
             $dataMeninggal = new Meninggal;
 
             $rules = [
-                'id' => 'required',
                 'ktp_id' => 'required',
-                'tempat' => 'required',
-                'tanggal' => 'required',
-                'umur' => 'required',
-                'sebab' => 'required',
-                'makam' => 'required',
-                'nama_pelapor' => 'required',
-                'hubungan_pelapor' => 'required',
             ];
 
             $validator = Validator::make($request->all(), $rules);
@@ -58,15 +51,8 @@ class MeninggalController extends Controller
                     'data' => $validator->errors()
                 ]);
             }
-            $dataMeninggal->id = $request->id;
             $dataMeninggal->ktp_id = $request->ktp_id;
-            $dataMeninggal->tempat = $request->tempat;
-            $dataMeninggal->tanggal = $request->tanggal;
-            $dataMeninggal->umur = $request->umur;
-            $dataMeninggal->sebab = $request->sebab;
-            $dataMeninggal->makam = $request->makam;
-            $dataMeninggal->nama_pelapor = $request->nama_pelapor;
-            $dataMeninggal->hubungan_pelapor = $request->hubungan_pelapor;
+
             $post = $dataMeninggal->save();
     
             return response()->json([
@@ -111,15 +97,15 @@ class MeninggalController extends Controller
         }
 
         $rules = [
-            'id' => 'required',
+            // 'id' => 'required',
             'ktp_id' => 'required',
-            'tempat' => 'required',
-            'tanggal' => 'required',
-            'umur' => 'required',
-            'sebab' => 'required',
-            'makam' => 'required',
-            'nama_pelapor' => 'required',
-            'hubungan_pelapor' => 'required',
+            // 'tempat' => 'required',
+            // 'tanggal' => 'required',
+            // 'umur' => 'required',
+            // 'sebab' => 'required',
+            // 'makam' => 'required',
+            // 'nama_pelapor' => 'required',
+            // 'hubungan_pelapor' => 'required',
         ];
 
         $validator = Validator::make($request->all(), $rules);

@@ -14,13 +14,6 @@ return new class extends Migration
         Schema::create('meninggal', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('ktp_id')->nullable(false);
-            $table->string('tempat',50)->nullable(false);
-            $table->date('tanggal')->nullable(false);
-            $table->integer('umur',)->nullable(false);
-            $table->string('sebab',50)->nullable(false);
-            $table->string('makam',50)->nullable(false);
-            $table->string('nama_pelapor',100)->nullable(false);
-            $table->string('hubungan_pelapor',100)->nullable(false);
             $table->timestamps();
             $table->foreign('ktp_id')->references('id')->on('ktp')->onUpdate('cascade')->onDelete('no action');
         });

@@ -10,15 +10,15 @@ class Meninggal extends Model
     use HasFactory;
     protected $table = "meninggal";
     protected $fillable = [
-        'id',
+        // 'id',
         'ktp_id',
-        'tempat',
-        'tanggal',
-        'umur',
-        'sebab',
-        'makam',
-        'nama_pelapor',
-        'hubungan_pelapor',
+        // 'tempat',
+        // 'tanggal',
+        // 'umur',
+        // 'sebab',
+        // 'makam',
+        // 'nama_pelapor',
+        // 'hubungan_pelapor',
     ];
     public $timestamps = true;
     public $incrementing = false;

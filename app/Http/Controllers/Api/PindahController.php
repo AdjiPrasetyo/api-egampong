@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Api;
 
+use App\Http\Controllers\Controller;
 use App\Models\Pindah;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -26,22 +27,22 @@ class PindahController extends Controller
      */
     public function store(Request $request)
     {
-        $data = Pindah::find($request->id);
+        $data = Pindah::where('ktp_id' , '=', $request->ktp_id)->first();
         //cek data
         if($data){
             return response()->json([
                 'status' => false,
                 'message' => 'Data sudah ada',
-                'data' => $data['id']. ' Sudah terdata !',
+                'data' =>' Sudah terdata !',
             ]);
         }else{
 
             $dataPindah = new Pindah;
 
             $rules = [
-                'id' => 'required',
+                // 'id' => 'required',
                 'ktp_id' => 'required',
-                'keterangan' => 'required',
+                // 'keterangan' => 'required',
             ];
 
             $validator = Validator::make($request->all(), $rules);
@@ -52,9 +53,9 @@ class PindahController extends Controller
                     'data' => $validator->errors()
                 ]);
             }
-            $dataPindah->id = $request->id;
+            // $dataPindah->id = $request->id;
             $dataPindah->ktp_id = $request->ktp_id;
-            $dataPindah->keterangan = $request->keterangan;
+            // $dataPindah->keterangan = $request->keterangan;
             $post = $dataPindah->save();
     
             return response()->json([
@@ -100,9 +101,9 @@ class PindahController extends Controller
 
         $rules = [
 
-            'id' => 'required',
+            // 'id' => 'required',
             'ktp_id' => 'required',
-            'keterangan' => 'required',
+            // 'keterangan' => 'required',
         ];
 
         $validator = Validator::make($request->all(), $rules);
@@ -114,9 +115,9 @@ class PindahController extends Controller
             ]);
         }
 
-        $dataPindah->id = $request->id;
+        // $dataPindah->id = $request->id;
         $dataPindah->ktp_id = $request->ktp_id;
-        $dataPindah->keterangan = $request->keterangan;
+        // $dataPindah->keterangan = $request->keterangan;
         $put = $dataPindah->save();
     
             return response()->json([
