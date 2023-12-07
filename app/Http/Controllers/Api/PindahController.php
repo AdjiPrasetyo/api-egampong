@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Models\Pindah;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 
 class PindahController extends Controller
@@ -14,7 +15,11 @@ class PindahController extends Controller
      */
     public function index()
     {
-        $data = Pindah::orderBy('id', 'asc')->get();
+        $data = DB::table('kk')
+        ->join('ktp', 'kk.id', '=', 'ktp.kk_id',)
+        ->whereIn('ktp.id', DB::table('pindah')->select('ktp_id'))
+        ->select('ktp.*','alamat')
+        ->get();
         return response()->json([
             'status' => true,
             'massage' => 'Data ditemukan',

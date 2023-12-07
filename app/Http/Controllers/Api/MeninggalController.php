@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Models\Meninggal;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 
 class MeninggalController extends Controller
@@ -14,7 +15,11 @@ class MeninggalController extends Controller
      */
     public function index()
     {
-        $data = Meninggal::orderBy('id', 'asc')->get();
+        $data = DB::table('kk')
+        ->join('ktp', 'kk.id', '=', 'ktp.kk_id',)
+        ->whereIn('ktp.id', DB::table('meninggal')->select('ktp_id'))
+        ->select('ktp.*','alamat')
+        ->get();
         return response()->json([
             'status' => true,
             'massage' => 'Data ditemukan',

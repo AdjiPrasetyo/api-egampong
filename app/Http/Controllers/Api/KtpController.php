@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Models\Ktp;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 
 class KtpController extends Controller
@@ -14,7 +15,10 @@ class KtpController extends Controller
      */
     public function index()
     {
-        $data = Ktp::orderBy('nama_lengkap', 'asc')->get();
+        $data = DB::table('kk')
+        ->join('ktp', 'kk.id', '=', 'ktp.kk_id',)
+        ->select('ktp.*','alamat')
+        ->get();
         return response()->json([
             'status' => true,
             'massage' => 'Data ditemukan',
